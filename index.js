@@ -3,7 +3,7 @@ const cors = require('cors');
 require('dotenv').config()
 const app = express()
 const port = process.env.PORT || 3000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 //middleware
 app.use(cors());
@@ -56,6 +56,18 @@ async function run() {
     res.send(result);
   })
 
+  
+  //get certai data for details
+  app.get("/models/:id", async(req,res) =>{
+      const id = req.params.id;
+        const filter = {_id: new ObjectId(id)}
+
+        const result = await allAiCollection.findOne(filter);
+        res.send(result);
+  })
+
+
+
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
@@ -65,4 +77,4 @@ async function run() {
 run().catch(console.dir);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
-})
+}) 
