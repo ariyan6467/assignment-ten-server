@@ -31,6 +31,8 @@ async function run() {
 
     const db = client.db('assign_ten');
     const allAiCollection = db.collection("allAiCollection")
+
+    
   //post all ai data
    app.post("/allai",async(req,res) =>{
     const newAi = req.body;
@@ -38,6 +40,14 @@ async function run() {
     res.send(result);
    })
 
+
+  
+   //post my modal
+   app.post("/mymodal",async(req,res) =>{
+    const myAi = req.body;
+    const result = await allAiCollection.insertOne(myAi);
+    res.send(result);
+   })
 
   //get home data from mongo db
   app.get("/allai",async(req,res)=>{
