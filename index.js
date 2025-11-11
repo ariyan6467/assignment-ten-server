@@ -96,6 +96,20 @@ async function run() {
   })
 
 
+
+
+
+  // get data through framework
+   app.get("/find/:framework", async(req,res) =>{
+      const framework = req.params.framework;
+        const filter = {framework: framework}
+
+        const result = await allAiCollection.find(filter).toArray();
+        res.send(result);
+  })
+
+
+
   // DELETE a specific model by its ID
     app.delete('/models/:id', async (req, res) => {
       const id = req.params.id;
