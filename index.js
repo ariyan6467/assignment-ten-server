@@ -69,9 +69,10 @@ async function run() {
 
   
 //all purchase collection
- app.get("/allpurchase",async(req,res)=>{
-    const cursor = purchaseColl.find();
-    const result = await cursor.toArray();
+ app.get("/userpurchase/:purchasedby",async(req,res)=>{
+    const purchasedby = req.params.purchasedby;
+    const filter = {purchasedby:purchasedby}
+    const result = await purchaseColl.find(filter).toArray();
     res.send(result);
   })
 
@@ -128,9 +129,11 @@ async function run() {
 
  
   // Post purchase data
-app.post("/purchase/:id", async (req, res) => {
-  const id = req.params.id;
-  const filter = { _id: new ObjectId(id) };
+app.post("/purchase", async (req, res) => {
+  const data = req.query;
+ console.log(data.email);
+
+  const filter = { _id: new ObjectId(data.id) };
 
   try {
   
@@ -142,7 +145,8 @@ app.post("/purchase/:id", async (req, res) => {
    
     const updatedModel = {
       ...purchasedModel,
-      purchased: purchasedModel.purchased + 1 
+      purchased: purchasedModel.purchased + 1 ,
+      purchasedby:data.email
     };
 
     await purchaseColl.insertOne(updatedModel); 
