@@ -180,6 +180,15 @@ app.put("/update/:id",async(req,res)=>{
 
 
 
+//update from another collection
+app.put("purchase/update/:id",async(req,res)=>{
+  const id = req.params.id;
+  const updatefields = req.body;
+  const filter = {_id:new ObjectId(id)}
+  const result = await purchaseColl.updateOne(filter,{$set:updatefields});
+  res.send(result);
+} )
+
 
 
     await client.db("admin").command({ ping: 1 });
