@@ -52,7 +52,7 @@ async function run() {
 
   //get home data from mongo db
   app.get("/allai",async(req,res)=>{
-    const cursor = allAiCollection.find().sort({createdAt:-1}).limit(12);
+    const cursor = allAiCollection.find().sort({createdAt:-1}).limit(6);
     const result = await cursor.toArray();
     res.send(result);
   })
@@ -191,7 +191,7 @@ app.put("purchase/update/:id",async(req,res)=>{
 
 
 
-    await client.db("admin").command({ ping: 1 });
+   // await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
    
